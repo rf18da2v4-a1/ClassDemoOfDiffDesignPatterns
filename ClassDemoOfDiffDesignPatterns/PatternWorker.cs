@@ -11,6 +11,8 @@ using ClassDemoOfDiffDesignPatterns.pattern.observer;
 using ClassDemoOfDiffDesignPatterns.pattern.proxy;
 using ClassDemoOfDiffDesignPatterns.pattern.singleton;
 using ClassDemoOfDiffDesignPatterns.pattern.state;
+using ClassDemoOfDiffDesignPatterns.pattern.strategy;
+using ClassDemoOfDiffDesignPatterns.pattern.template;
 using FactoryType = ClassDemoOfDiffDesignPatterns.pattern.factory.FactoryType;
 using IComponent = ClassDemoOfDiffDesignPatterns.pattern.decorator.IComponent;
 using IDemoObject = ClassDemoOfDiffDesignPatterns.pattern.factory.IDemoObject;
@@ -40,16 +42,16 @@ namespace ClassDemoOfDiffDesignPatterns
             DemoProxy();
             
             DemoDecorator();
-            */
+            
             
             DemoObserver();
-            /*
-            DemoTemplate();
+           */
+            //DemoTemplate();
 
-            DemoStrategy();
+            //DemoStrategy();
 
             DemoState();
-            */
+            
         }
 
         private void DemoFactoryMethod()
@@ -203,6 +205,11 @@ namespace ClassDemoOfDiffDesignPatterns
                 "Michael C"
             };
 
+            AbstractTemplateClass temp = new MySubTemplate();
+            temp.InsertTemplateMethod(data);
+
+            Console.WriteLine(temp);
+
         }
 
         private void DemoStrategy()
@@ -215,19 +222,27 @@ namespace ClassDemoOfDiffDesignPatterns
                 "Michael C"
             };
 
+            ContextClass context = new ContextClass();
+            context.InsertStrategyMethod(data, new ConcreteStrategy());
+            Console.WriteLine(context);
 
+
+            ContextClassMoreCSharpLike context2 = new ContextClassMoreCSharpLike();
+            context2.StrategyMethod = (s) => { return s.Substring(1); };
+            context2.InsertStrategyMethod(data);
+            Console.WriteLine(context2);
 
         }
 
         private void DemoState()
         {
             // low tax
-            IState calc = null;
+            IState calc = new DemoStateLow();
             int price = calc.HandleCalculate(10000);
             Console.WriteLine($"Price with low tax is {price}");
 
             // high tax
-            calc = null;
+            calc = new DemoStateHigh();
             price = calc.HandleCalculate(10000);
             Console.WriteLine($"Price with high tax is {price}");
         }
